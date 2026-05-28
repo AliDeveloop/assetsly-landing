@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
+    <title>استزلی | Assetly | مدیریت هوشمند پورتفوی</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vazirmatn Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        * {
+            font-family: 'Vazirmatn', 'Tahoma', system-ui, sans-serif !important;
+        }
+        body {
+            background: #03060c;
+            color: #eef2ff;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        /* تم مشکی با هایلایت آبی */
+        .glass-card {
+            background: rgba(18, 25, 40, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+        .glass-card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(25, 35, 55, 0.85);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+        }
+        .btn-primary {
+            background: linear-gradient(105deg, #1e40af, #2563eb);
+            box-shadow: 0 8px 20px -8px rgba(37, 99, 235, 0.4);
+            transition: all 0.25s ease;
+        }
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 28px -6px rgba(59, 130, 246, 0.6);
+            background: linear-gradient(105deg, #2563eb, #3b82f6);
+        }
+        .feature-icon {
+            background: rgba(59, 130, 246, 0.12);
+            border-radius: 28px;
+        }
+        /* موکاپ دسکتاپ - عریض و بلندتر */
+        .mockup-desktop {
+            transform: perspective(1400px) rotateY(-6deg) rotateX(4deg);
+            transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 40px 60px -25px rgba(0,0,0,0.6), 0 0 0 1px rgba(59,130,246,0.3);
+            border-radius: 28px;
+        }
+        .mockup-desktop:hover {
+            transform: perspective(1400px) rotateY(-3deg) rotateX(2deg) translateY(-8px);
+        }
+        /* موکاپ موبایل - عمودی و برجسته */
+        .mockup-mobile {
+            transform: perspective(1000px) rotateY(-4deg) rotateX(3deg);
+            transition: transform 0.4s ease;
+            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(59,130,246,0.35);
+            border-radius: 36px;
+        }
+        .mockup-mobile:hover {
+            transform: perspective(1000px) rotateY(-2deg) rotateX(2deg) translateY(-6px);
+        }
+        .stat-number {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .blue-glow-bg {
+            background: radial-gradient(circle at 70% 20%, rgba(59, 130, 246, 0.08), transparent 70%);
+        }
+        @media (max-width: 768px) {
+            .mockup-desktop {
+                transform: perspective(800px) rotateY(-3deg) rotateX(2deg);
+            }
+            .glass-card {
+                backdrop-filter: blur(8px);
+            }
+        }
+        ::-webkit-scrollbar {
+            width: 5px;
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+        @keyframes floatDesktop {
+            0% { transform: perspective(1400px) rotateY(-6deg) rotateX(4deg) translateY(0px); }
+            50% { transform: perspective(1400px) rotateY(-5deg) rotateX(3deg) translateY(-10px); }
+            100% { transform: perspective(1400px) rotateY(-6deg) rotateX(4deg) translateY(0px); }
+        }
+        @keyframes floatMobile {
+            0% { transform: perspective(1000px) rotateY(-4deg) rotateX(3deg) translateY(0px); }
+            50% { transform: perspective(1000px) rotateY(-3deg) rotateX(2deg) translateY(-6px); }
+            100% { transform: perspective(1000px) rotateY(-4deg) rotateX(3deg) translateY(0px); }
+        }
+        .animate-float-desktop {
+            animation: floatDesktop 6s ease-in-out infinite;
+        }
+        .animate-float-mobile {
+            animation: floatMobile 5s ease-in-out infinite;
+        }
+        .screenshot-placeholder {
+            background: linear-gradient(145deg, #0f172a, #0a0f1c);
+            border: 1px solid #1e293b;
+        }
+        /* لوگو با border-radius */
+        .logo-rounded {
+            border-radius: 16px;
+        }
+        @media (max-width: 640px) {
+            .logo-rounded {
+                border-radius: 12px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-[#03060c] to-[#0a0f1a] antialiased">
+
+    <!-- هدر مشکی با لوگو (border-radius اصلاح شده) -->
+    <nav class="fixed top-0 left-0 right-0 z-50 py-3 px-4 md:py-4 md:px-8 bg-black/80 backdrop-blur-xl border-b border-blue-900/30 shadow-lg transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2 md:gap-3">
+                <!-- لوگو با border-radius اصلاح شده -->
+                <div class="w-9 h-9 md:w-11 md:h-11 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-lg logo-rounded">
+                    <span class="text-white font-black text-base md:text-lg"><img src="img/logo2.png"></span>
+                </div>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-white text-xl md:text-2xl font-bold tracking-tight">استزلی</span>
+                    <span class="text-blue-400/60 text-[10px] md:text-xs font-mono hidden sm:inline-block">| Assetly</span>
+                </div>
+            </div>
+            <div>
+                <a href="/" class="btn-primary text-white font-bold px-4 py-1.5 md:px-6 md:py-2.5 rounded-xl md:rounded-2xl text-xs md:text-sm shadow-xl transition-all flex items-center gap-1 md:gap-2">
+                    ورود
+                    <svg class="w-3 h-3 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION - دو موکاپ مجزا برای دسکتاپ و موبایل -->
+    <section class="relative pt-28 pb-16 md:pt-44 md:pb-28 overflow-hidden blue-glow-bg">
+        <div class="max-w-7xl mx-auto px-5 md:px-10 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <!-- متن سمت راست -->
+                <div data-aos="fade-up" data-aos-duration="800">
+                    <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/20 rounded-full px-3 py-1 md:px-4 md:py-1.5 mb-5">
+                        <span class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                        </span>
+                        <span class="text-blue-300 text-[11px] md:text-xs font-medium">نسل جدید مدیریت دارایی</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-white">
+                        پورتفوی خود را
+                        <span class="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">هوشمندانه</span>
+                        مدیریت کن
+                    </h1>
+                    <p class="text-gray-400 text-base md:text-xl mt-4 md:mt-6 leading-relaxed">
+                        Assetly پلتفرم حرفه‌ای تحلیل پورتفوی با تمرکز بر سود/زیان، تنوع‌بندی، قدرت خرید لحظه‌ای و API شخصی.
+                    </p>
+                    <div class="flex flex-wrap gap-3 mt-7 md:mt-10">
+                        <a href="/" class="btn-primary text-white font-bold px-5 py-2.5 md:px-8 md:py-3 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-2xl flex items-center gap-2">
+                            شروع رایگان
+                            <svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                        </a>
+                        <a href="#features" class="border border-gray-700 hover:border-blue-500 hover:bg-blue-500/10 rounded-xl md:rounded-2xl px-4 py-2.5 md:px-6 md:py-3 text-gray-300 text-sm md:text-base transition">ویژگی‌ها</a>
+                    </div>
+                    <div class="flex items-center gap-4 mt-8 md:mt-12 text-gray-500 text-xs md:text-sm">
+                        <div class="flex -space-x-2">
+                            <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-800 border border-blue-500/30 flex items-center justify-center text-[8px] md:text-[10px] text-blue-400">✓</div>
+                            <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-800 border border-blue-500/30 flex items-center justify-center text-[8px] md:text-[10px] text-blue-400">✓</div>
+                            <div class="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-800 border border-blue-500/30 flex items-center justify-center text-[8px] md:text-[10px] text-blue-400">✓</div>
+                        </div>
+                        <span class="text-gray-400">بیش از <span class="text-blue-400 font-bold">۱۲۰۰+</span> سرمایه‌گذار حرفه‌ای</span>
+                    </div>
+                </div>
+
+                <!-- موکاپ دسکتاپ (فقط در اندازه‌های بزرگتر از md نمایش داده شود) -->
+                <div class="hidden md:block relative" data-aos="fade-left" data-aos-duration="1000">
+                    <div class="relative w-full max-w-2xl mx-auto">
+                        <div class="mockup-desktop animate-float-desktop rounded-3xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-950 shadow-2xl border border-blue-500/25">
+                            <div class="bg-gray-900/80 px-5 py-3 flex items-center gap-2 border-b border-gray-800">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                <span class="text-xs text-gray-400 mx-auto font-medium">استزلی — داشبورد حرفه‌ای</span>
+                            </div>
+                            <div class="p-6 md:p-8 flex flex-col items-center">
+                                <div class="w-full screenshot-placeholder rounded-xl p-5 text-center">
+                                    <svg class="w-16 h-16 md:w-20 md:h-20 mx-auto text-blue-400/60 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                                    <p class="text-gray-300 text-base md:text-lg">پیش‌نمایش داشبورد دسکتاپ</p>
+                                    <p class="text-gray-500 text-sm mt-1">(اسکرین‌شات واقعی به‌زودی)</p>
+                                    <div class="mt-5 grid grid-cols-2 gap-3 text-sm">
+                                        <div class="bg-gray-800/50 p-3 rounded-lg text-blue-300">📊 ارزش کل: ۱.۲۵B</div>
+                                        <div class="bg-gray-800/50 p-3 rounded-lg text-green-400">📈 سود امروز: +۱۲.۵%</div>
+                                        <div class="bg-gray-800/50 p-3 rounded-lg text-yellow-400">💰 قدرت خرید: $۴,۲۰۰</div>
+                                        <div class="bg-gray-800/50 p-3 rounded-lg text-purple-400">📋 ۱۲ دارایی فعال</div>
+                                    </div>
+                                </div>
+                                <div class="mt-5 w-full text-center text-sm text-blue-400/70 border-t border-gray-800 pt-4">
+                                    📱 کاملاً واکنشگرا • نصب PWA • API اختصاصی
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- موکاپ موبایل (فقط در موبایل و تبلت نمایش داده شود) -->
+                <div class="block md:hidden relative" data-aos="fade-up" data-aos-duration="800">
+                    <div class="relative flex justify-center">
+                        <div class="mockup-mobile animate-float-mobile rounded-3xl overflow-hidden bg-gradient-to-b from-gray-900 to-gray-950 shadow-2xl border border-blue-500/30 w-80">
+                            <div class="bg-blue-600/90 px-4 py-2 flex justify-between items-center">
+                                <span class="text-white text-xs font-medium">استزلی</span>
+                                <div class="flex gap-1.5">
+                                    <div class="w-2 h-2 rounded-full bg-white/50"></div>
+                                    <div class="w-2 h-2 rounded-full bg-white/50"></div>
+                                </div>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <!-- هدر موبایل -->
+                                <div class="bg-blue-500/10 rounded-xl p-3 border border-blue-500/20">
+                                    <div class="text-[10px] text-gray-400 mb-1">ارزش کل پورتفوی</div>
+                                    <div class="text-white text-lg font-bold">۱,۲۵۰,۰۰۰,۰۰۰ ت</div>
+                                    <div class="text-green-400 text-[10px] mt-1">▲ +۱۲.۵% امروز</div>
+                                </div>
+                                <!-- کارت سود -->
+                                <div class="bg-gray-800/50 rounded-xl p-3 flex justify-between items-center">
+                                    <span class="text-gray-300 text-xs">سود خالص</span>
+                                    <span class="text-green-400 font-bold text-sm">+۲۵۰,۰۰۰,۰۰۰ ت</span>
+                                </div>
+                                <!-- قدرت خرید -->
+                                <div class="bg-gray-800/50 rounded-xl p-3">
+                                    <div class="text-gray-400 text-[9px] mb-2">قدرت خرید لحظه‌ای</div>
+                                    <div class="flex justify-between text-xs">
+                                        <span class="text-blue-300">$۴,۲۰۰</span>
+                                        <span class="text-yellow-300">🥇 ۱۲.۵ گرم</span>
+                                        <span class="text-orange-300">₿ ۰.۰۴۲</span>
+                                    </div>
+                                </div>
+                                <!-- لیست دارایی‌ها (پیش‌نمایش) -->
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-[10px] text-gray-400 px-1">
+                                        <span>دارایی</span><span>سود/زیان</span>
+                                    </div>
+                                    <div class="bg-gray-800/30 rounded-lg p-2 flex justify-between text-xs">
+                                        <span class="text-white">بیت‌کوین</span>
+                                        <span class="text-green-400">+۳۲%</span>
+                                    </div>
+                                    <div class="bg-gray-800/30 rounded-lg p-2 flex justify-between text-xs">
+                                        <span class="text-white">طلا</span>
+                                        <span class="text-green-400">+۸.۲%</span>
+                                    </div>
+                                    <div class="bg-gray-800/30 rounded-lg p-2 flex justify-between text-xs">
+                                        <span class="text-white">دلار</span>
+                                        <span class="text-red-400">-۲.۱%</span>
+                                    </div>
+                                </div>
+                                <!-- نوار ناوبری پایین -->
+                                <div class="flex justify-around pt-3 border-t border-gray-800 mt-2">
+                                    <span class="text-blue-400 text-xs">📊</span>
+                                    <span class="text-gray-500 text-xs">📈</span>
+                                    <span class="text-gray-500 text-xs">👤</span>
+                                    <span class="text-gray-500 text-xs">⚙️</span>
+                                </div>
+                            </div>
+                            <div class="bg-gray-800/50 py-1.5 text-center">
+                                <span class="text-[8px] text-gray-500">Assetly — مدیریت حرفه‌ای</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- بخش قابلیت‌ها (دارک مود) -->
+    <section id="features" class="py-16 md:py-28 relative bg-[#03060c]">
+        <div class="max-w-7xl mx-auto px-5 md:px-10">
+            <div class="text-center mb-12 md:mb-16" data-aos="fade-up">
+                <span class="text-blue-400 text-xs md:text-sm uppercase tracking-wider bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">قدرت در سادگی</span>
+                <h2 class="text-2xl md:text-4xl font-bold mt-3 md:mt-4 text-white">ابزارهای کلیدی برای سلطه بر بازار</h2>
+                <p class="text-gray-400 text-sm md:text-base max-w-2xl mx-auto mt-2">تحلیل آنی، گزارش‌گیری و مدیریت هوشمند سبد سرمایه</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
+                <div class="glass-card rounded-xl md:rounded-2xl p-5 md:p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-xl md:rounded-2xl mb-4">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white">تحلیل تعادل</h3>
+                    <p class="text-gray-400 text-xs md:text-sm mt-2">درصد تمرکز دارایی، ریسک پورتفوی و پیشنهاد بهینه‌سازی لحظه‌ای</p>
+                </div>
+                <div class="glass-card rounded-xl md:rounded-2xl p-5 md:p-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-xl md:rounded-2xl mb-4">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path></svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white">قدرت خرید پویا</h3>
+                    <p class="text-gray-400 text-xs md:text-sm mt-2">محاسبه توان خرید بر حسب دلار، طلا، بیت‌کوین و ریال با نرخ لحظه‌ای</p>
+                </div>
+                <div class="glass-card rounded-xl md:rounded-2xl p-5 md:p-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-xl md:rounded-2xl mb-4">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white">گزارش PDF پیشرفته</h3>
+                    <p class="text-gray-400 text-xs md:text-sm mt-2">خروجی حرفه‌ای با نمودارهای تعاملی، جدول سود و زیان، آماده ارائه</p>
+                </div>
+                <div class="glass-card rounded-xl md:rounded-2xl p-5 md:p-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon w-10 h-10 md:w-12 md:h-12 flex items-center justify-center rounded-xl md:rounded-2xl mb-4">
+                        <svg class="w-5 h-5 md:w-6 md:h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-lg md:text-xl font-bold text-white">API اختصاصی</h3>
+                    <p class="text-gray-400 text-xs md:text-sm mt-2">دریافت قیمت‌ها و مدیریت داده‌ها با کلید API امن و نرخ‌محدود</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- آمار -->
+    <section class="py-14 md:py-20 bg-[#03060c]">
+        <div class="max-w-6xl mx-auto px-5 md:px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
+                <div data-aos="zoom-in"><div class="text-2xl md:text-5xl font-black stat-number">+۱۰k</div><p class="text-gray-400 text-xs md:text-sm mt-1">تراکنش ثبت شده</p></div>
+                <div data-aos="zoom-in" data-aos-delay="100"><div class="text-2xl md:text-5xl font-black stat-number">۱۵</div><p class="text-gray-400 text-xs md:text-sm mt-1">کلاس دارایی</p></div>
+                <div data-aos="zoom-in" data-aos-delay="200"><div class="text-2xl md:text-5xl font-black stat-number">۹۹.۹%</div><p class="text-gray-400 text-xs md:text-sm mt-1">پایداری سرور</p></div>
+                <div data-aos="zoom-in" data-aos-delay="300"><div class="text-2xl md:text-5xl font-black stat-number">۲۰۲۵</div><p class="text-gray-400 text-xs md:text-sm mt-1">نسخه ۳ پایدار</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 md:py-24 bg-gradient-to-br from-[#03060c] to-[#0a0f1a]">
+        <div class="max-w-4xl mx-auto text-center px-5" data-aos="flip-up">
+            <div class="glass-card rounded-2xl md:rounded-3xl p-6 md:p-12 border border-blue-500/20 shadow-2xl">
+                <span class="text-4xl md:text-5xl block mb-2">🚀</span>
+                <h2 class="text-2xl md:text-4xl font-bold text-white">آماده‌ای پورتفوی خود را متحول کنی؟</h2>
+                <p class="text-gray-400 text-sm md:text-base mt-3 max-w-xl mx-auto">همین الان وارد شوید و از ابزارهای حرفه‌ای مدیریت سرمایه استفاده کنید.</p>
+                <div class="mt-6 md:mt-8"><a href="/" class="btn-primary text-white font-bold px-6 py-2.5 md:px-8 md:py-3 rounded-xl md:rounded-2xl text-sm md:text-lg shadow-2xl">شروع کن - رایگان</a></div>
+                <p class="text-gray-500 text-[10px] md:text-xs mt-4">بدون نیاز به نصب • پشتیبانی ۲۴/۷ • امنیت بالا</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- فوتر -->
+    <footer class="border-t border-blue-900/20 py-6 text-center text-gray-500 text-[10px] md:text-xs bg-[#03060c]">
+        <div class="max-w-6xl mx-auto px-5 flex flex-col items-center gap-2">
+            <div class="flex items-center gap-2">
+                <div class="w-5 h-5 bg-blue-600 flex items-center justify-center logo-rounded"><span class="text-white text-[8px] font-bold">اس</span></div>
+                <span class="text-gray-400 text-xs">استزلی — مدیریت حرفه‌ای پورتفوی</span>
+            </div>
+            <p>© ۱۴۰۴ تمامی حقوق برای Assetly محفوظ است.</p>
+        </div>
+    </footer>
+
+    <script>
+        AOS.init({ duration: 700, once: true, offset: 40, easing: 'ease-out-quad' });
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) nav?.classList.add('bg-black/90', 'shadow-xl');
+            else nav?.classList.remove('bg-black/90', 'shadow-xl');
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const id = this.getAttribute('href');
+                if (id === "#" || id === "") return;
+                const target = document.querySelector(id);
+                if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+    </script>
+</body>
+</html>
